@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://taskmanager:taskmanager@projects.cabu73k.mongodb.net/?retryWrites=true&w=majority"
+}

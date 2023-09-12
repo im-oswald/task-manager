@@ -8,7 +8,13 @@ connectDB();
 // Init middleware
 app.use(express.json({ extended: false }));
 
-app.use('/', (req, res) => res.send('API is working'));
+// Testing route
+app.get('/', (req, res) => res.send('API is running'));
+
+// Define custom routes here
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/tasks', require('./routes/api/tasks'));
 
 const PORT = process.env.PORT || 5000;
 

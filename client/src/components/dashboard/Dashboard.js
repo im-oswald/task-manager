@@ -22,8 +22,8 @@ const Dashboard = ({ auth: { user, loading } }) => (
         </>
       }
       <p>It seems you haven't interacted with the tasks page yet, click below to know more about it or to logout.</p>
-      <Link to='/logout' className='btn btn-danger my-1'>
-        Logout
+      <Link to='/tasks' className='btn btn-primary my-1'>
+        Tasks
       </Link>
   </div>
 )

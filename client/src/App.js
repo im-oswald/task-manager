@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'store';
 import 'App.css';
-import { Landing } from 'components/layout';
+import { Landing, Navbar } from 'components/layout';
 import { Login, Register } from 'components/auth';
 import { Dashboard } from 'components/dashboard';
 import { PrivateRoute } from 'components/routing';
@@ -26,6 +26,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
+          <Navbar />
           <Routes>
             <Route exact path='/' element={<Landing />} />
             <Route exact path='/login' element={<Login />} />

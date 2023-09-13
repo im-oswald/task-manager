@@ -68,6 +68,8 @@ nvm use 16
 ./setup.sh
 ```
 
+The above instruction will host the application at http://localhost:3000
+
 ## Assumptions
 
 - A user shows only accessible tasks, instead of showing all, as I added user authentication.

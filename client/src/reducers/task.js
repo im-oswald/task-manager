@@ -24,7 +24,7 @@ export default function taskReducer(state = initialState, action) {
     case TASK_ERROR:
       return { ...state, error: payload, loading: false };
     case DELETE_TASK:
-      return { ...state, tasks: state.tasks.filter(task => payload.id === task._id), loading: false };
+      return { ...state, tasks: state.tasks.filter(task => payload.id !== task._id), loading: false };
     case ADD_TASK:
       return { ...state, tasks: [payload, ...state.tasks], loading: false };
     case SELECT_TASK:

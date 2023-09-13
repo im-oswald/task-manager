@@ -10,7 +10,7 @@ const router = express.Router();
 // @access        Private
 router.get('/', auth, async (req, res) => {
   try {
-    const tasks = await Task.find().sort({ completed: 1, priority: '-1', date: '-1' });
+    const tasks = await Task.find({ user: req.user.id }).sort({ completed: 1, priority: '-1', date: '-1' });
 
     res.json(tasks);
 

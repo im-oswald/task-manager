@@ -38,6 +38,7 @@ const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
       <div>
         <p className={`badge badge-${PRIORITY_OPTIONS[priority]}`}>{PRIORITIES[priority]}</p>
         <p className="my-1">
+          {completed && <i className="fa fa-check mx-1" />}
           <span className={`${completed && 'strikeout-text'}`}>{title}</span>
         </p>
         <p className="task-date">

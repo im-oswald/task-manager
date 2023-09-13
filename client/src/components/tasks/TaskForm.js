@@ -48,7 +48,7 @@ const TaskForm = ({ task, addTask, getTasks, clearTask, updateTask }) => {
 
   return (
     <div>
-      <div className="post-form">
+      <div className="task-form">
         <div className={`bg-${isSelected ? 'success' : 'primary'} p`}>
           <h3>{isSelected ? "Update the" : "Add any"} action item in your list...</h3>
         </div>

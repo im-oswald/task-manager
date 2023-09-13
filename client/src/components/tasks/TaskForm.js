@@ -1,35 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { addTask } from 'actions/task';
+import { addTask, getTasks, updateTask, clearTask } from 'actions/task';
 import PropTypes from 'prop-types';
 import { PRIORITIES } from 'constants';
 
 /**
  * TaskForm
  *
+ * @param {Object}     task
  * @param {Function}   addTask
+ * @param {Function}   getTasks
+ * @param {Function}   clearTask
  */
-const TaskForm = ({ addTask }) => {
+const TaskForm = ({ task, addTask, getTasks, clearTask }) => {
+  const { task: selectedTask } = task;
+  const isSelected = Object.keys(selectedTask).length > 0;
   const [formData, setFormData] = useState({
     title: '',
     priority: ''
   });
 
+  useEffect(() => {
+    if (isSelected) {
+      setFormData(selectedTask);
+    } else {
+      setFormData({ title: '', priority: '' });
+    }
+    
+  }, [selectedTask, isSelected])
+
   const { title, priority } = formData;
+
+  debugger
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addTask({ title, priority });
+
+    if (isSelected) {
+      updateTask(selectedTask._id, formData);
+    } else {
+      addTask({ title, priority });
+    }
     setFormData({ title: '', priority: '' });
+    getTasks();
   }
 
   return (
     <div>
       <div className="post-form">
-        <div className="bg-primary p">
-          <h3>Add any action item in your list...</h3>
+        <div className={`bg-${isSelected ? 'success' : 'primary'} p`}>
+          <h3>{isSelected ? "Update the" : "Add any"} action item in your list...</h3>
         </div>
         <form className="form my-1" onSubmit={onSubmit}>
           <textarea
@@ -51,14 +73,21 @@ const TaskForm = ({ addTask }) => {
             }
           </select>
           <input type="submit" className="btn btn-dark my-1" value="Submit" />
+          {isSelected && <button onClick={() => clearTask(selectedTask._id)} className="btn btn-danger">Cancel</button>}
         </form>
       </div>      
     </div>
   )
 }
 
+const mapStateToProps = state => ({
+  task: state.task,
+});
+
 TaskForm.propTypes = {
-  addTask: PropTypes.func.isRequired
+  addTask: PropTypes.func.isRequired,
+  getTasks: PropTypes.func.isRequired,
+  clearTask: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addTask })(TaskForm)
+export default connect(mapStateToProps, { addTask, getTasks, clearTask })(TaskForm)

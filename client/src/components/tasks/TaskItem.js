@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteTask, updateTask, getTasks } from 'actions/task';
+import { deleteTask, updateTask, getTasks, selectTask } from 'actions/task';
 import { Spinner } from 'components/spinner';
 import { PRIORITIES, PRIORITY_OPTIONS } from 'constants';
 
@@ -13,19 +13,14 @@ import { PRIORITIES, PRIORITY_OPTIONS } from 'constants';
  * @param {Object}     auth
  * @param {Function}   deleteTask
  * @param {Function}   updateTask
- * @param {Function}   getTasks
+ * @param {Function}   selectTask
  */
-const TaskItem = ({ task, auth, deleteTask, updateTask, getTasks }) => {
+const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
   const { _id, title, priority, completed, date, user } = task;
   const { loading } = auth;
 
   if (loading) {
     return <Spinner />;
-  }
-
-  const completeTask = () => {
-    updateTask(_id, { completed: true });
-    getTasks();
   }
 
   return (
@@ -50,13 +45,13 @@ const TaskItem = ({ task, auth, deleteTask, updateTask, getTasks }) => {
                 <button      
                   type="button"
                   className="btn btn-success"
-                  onClick={completeTask}>
+                  onClick={() => updateTask(_id, { completed: true })}>
                   <i className="fas fa-check"></i> Complete
                 </button>
                 <button      
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => updateTask(_id) }>
+                  onClick={() => selectTask(_id) }>
                   <i className="fa fa-pen"></i> Edit
                 </button>   
                 <button      
@@ -79,11 +74,11 @@ TaskItem.propTypes = {
   task: PropTypes.object.isRequired,
   deleteTask: PropTypes.func.isRequired,
   updateTask: PropTypes.func.isRequired,
-  getTasks: PropTypes.func.isRequired
+  selectTask: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { deleteTask, updateTask, getTasks })(TaskItem);
+export default connect(mapStateToProps, { deleteTask, updateTask, getTasks, selectTask })(TaskItem);

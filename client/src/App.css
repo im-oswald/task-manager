@@ -635,3 +635,7 @@ button {
 .font-green {
   color: green;
 }
+
+.color-green {
+  background-color: green;
+}

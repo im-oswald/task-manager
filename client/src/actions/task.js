@@ -1,6 +1,14 @@
 import axios from "axios"
 import { setAlert } from "./alert";
-import { GET_TASKS, TASK_ERROR, DELETE_TASK, ADD_TASK, UPDATE_TASK } from "./types/task"
+import {
+  GET_TASKS,
+  TASK_ERROR,
+  DELETE_TASK,
+  ADD_TASK,
+  UPDATE_TASK,
+  SELECT_TASK,
+  CLEAR_SELECTED_TASK
+} from "./types/task";
 
 export const getTasks = () => async dispatch => {
   try {
@@ -39,7 +47,7 @@ export const addTask = (formData) => async dispatch => {
     dispatch({ type: ADD_TASK, payload: res.data });
   } catch(err) {
     const errors = err.response.data;
-    if(errors) {
+    if(errors && errors.length > 0) {
       errors.map((error) => dispatch(setAlert(error.msg, 'danger')))
     }
 
@@ -61,10 +69,18 @@ export const updateTask = (id, formData) => async dispatch => {
     dispatch({ type: UPDATE_TASK, payload: res.data });
   } catch(err) {
     const errors = err.response.data;
-    if(errors) {
+    if(errors && errors.length > 0) {
       errors.map((error) => dispatch(setAlert(error.msg, 'danger')))
     }
 
     dispatch({ type: TASK_ERROR, payload: { status: err.response.status, msg: err.response.statusText } });
   }
+}
+
+export const selectTask = (id) => async dispatch => {
+  dispatch({ type: SELECT_TASK, payload: { id } });
+}
+
+export const clearTask = (id) => async dispatch => {
+  dispatch({ type: CLEAR_SELECTED_TASK, payload: { id: '' } });
 }

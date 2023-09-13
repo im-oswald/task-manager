@@ -11,8 +11,9 @@ import { PRIORITIES } from 'constants';
  * @param {Function}   addTask
  * @param {Function}   getTasks
  * @param {Function}   clearTask
+ * @param {Function}   updateTask
  */
-const TaskForm = ({ task, addTask, getTasks, clearTask }) => {
+const TaskForm = ({ task, addTask, getTasks, clearTask, updateTask }) => {
   const { task: selectedTask } = task;
   const isSelected = Object.keys(selectedTask).length > 0;
   const [formData, setFormData] = useState({
@@ -30,8 +31,6 @@ const TaskForm = ({ task, addTask, getTasks, clearTask }) => {
   }, [selectedTask, isSelected])
 
   const { title, priority } = formData;
-
-  debugger
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -88,6 +87,7 @@ TaskForm.propTypes = {
   addTask: PropTypes.func.isRequired,
   getTasks: PropTypes.func.isRequired,
   clearTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { addTask, getTasks, clearTask })(TaskForm)
+export default connect(mapStateToProps, { addTask, getTasks, clearTask, updateTask })(TaskForm)

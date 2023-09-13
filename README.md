@@ -93,4 +93,4 @@ The above instruction will host the application at http://localhost:3000
 - State management using redux
 - Custom Pagination (default records count is 5)
 - Deep linking of the urls on the paginated records
-  - Try accessing http://localhost:5000/api/tasks?page=2 directly from the address bar. It would show you the records of the 2nd page
+  - Try accessing http://localhost:3000/api/tasks?page=2 directly from the address bar. It would show you the records of the 2nd page

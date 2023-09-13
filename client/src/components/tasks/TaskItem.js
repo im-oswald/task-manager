@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -18,6 +19,7 @@ import { PRIORITIES, PRIORITY_OPTIONS } from 'constants';
 const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
   const { _id, title, priority, completed, date, user } = task;
   const { loading } = auth;
+  const [searchParams] = useSearchParams({});
 
   if (loading) {
     return <Spinner />;
@@ -27,6 +29,7 @@ const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
     const shouldDelete = window.confirm("Are you sure you want to delete this task?");
     if (shouldDelete) {
       deleteTask(id);
+      getTasks(searchParams.get("page"));
     }
   }
 

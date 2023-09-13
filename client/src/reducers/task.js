@@ -12,7 +12,9 @@ const initialState = {
   tasks: [],
   task: {},
   loading: true,
-  error: {}
+  error: {},
+  total: 0,
+  tasksPerPage: 0
 }
 
 export default function taskReducer(state = initialState, action) {
@@ -20,7 +22,7 @@ export default function taskReducer(state = initialState, action) {
 
   switch(type) {
     case GET_TASKS:
-      return { ...state, tasks: payload, task: {}, loading: false };
+      return { ...state, tasks: payload.tasks, total: payload.totalTasksCount, tasksPerPage: payload.limit, task: {}, loading: false };
     case TASK_ERROR:
       return { ...state, error: payload, loading: false };
     case DELETE_TASK:

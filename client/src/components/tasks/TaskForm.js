@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addTask, getTasks, updateTask, clearTask } from 'actions/task';
 import PropTypes from 'prop-types';
@@ -16,6 +17,7 @@ import { PRIORITIES } from 'constants';
 const TaskForm = ({ task, addTask, getTasks, clearTask, updateTask }) => {
   const { task: selectedTask } = task;
   const isSelected = Object.keys(selectedTask).length > 0;
+  const [searchParams] = useSearchParams({});
   const [formData, setFormData] = useState({
     title: '',
     priority: ''
@@ -43,7 +45,7 @@ const TaskForm = ({ task, addTask, getTasks, clearTask, updateTask }) => {
       addTask({ title, priority });
     }
     setFormData({ title: '', priority: '' });
-    getTasks();
+    getTasks(searchParams.get("page"));
   }
 
   return (

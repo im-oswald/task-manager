@@ -1,9 +1,11 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useCallback, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTasks } from 'actions/task';
 import { Spinner } from 'components/spinner';
 import { TaskForm, TaskItem } from 'components/tasks';
+import { Paginate } from 'components/pagination';
 
 /**
  * Tasks
@@ -12,16 +14,24 @@ import { TaskForm, TaskItem } from 'components/tasks';
  * @param {Function}   getTasks
  */
 const Tasks = ({ task, getTasks }) => {
-  const { tasks, loading } = task;
+  const { tasks, total, loading } = task;
+  const [searchParams] = useSearchParams({});
+
+  const handlePageChange = useCallback((newPage) => {
+    getTasks(newPage);
+  }, []);
 
   useEffect(() => {
-    getTasks();
-  }, [getTasks, loading]);
+    getTasks(searchParams.get("page"));
+  }, [getTasks, loading, searchParams]);
+
+  if (loading)
+    return <Spinner />;
 
   return (
     <Fragment>
       <div className='container'>
-        { loading ? <Spinner /> : <div>
+        <div>
           <h1 className="large text-primary">
             Tasks
           </h1>
@@ -31,8 +41,8 @@ const Tasks = ({ task, getTasks }) => {
             { tasks.length ? tasks.map((task) => <TaskItem key={task._id} task={task} />) : <h4>No tasks found</h4> }
           </div>
         </div>
-        }
       </div>
+      <Paginate totalRecords={total} handlePageChange={handlePageChange} />
     </Fragment>
   )
 }

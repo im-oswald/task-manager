@@ -10,9 +10,9 @@ import {
   CLEAR_SELECTED_TASK
 } from "./types/task";
 
-export const getTasks = () => async dispatch => {
+export const getTasks = (page = 1) => async dispatch => {
   try {
-    const res = await axios.get('/api/tasks');
+    const res = await axios.get(`/api/tasks?page=${page}`);
 
     dispatch({ type: GET_TASKS, payload: res.data });
   } catch(err) {

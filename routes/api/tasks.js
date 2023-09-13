@@ -10,9 +10,19 @@ const router = express.Router();
 // @access        Private
 router.get('/', auth, async (req, res) => {
   try {
-    const tasks = await Task.find({ user: req.user.id }).sort({ completed: 1, priority: '-1', date: '-1' });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const startIndex = (page - 1) * limit;
 
-    res.json(tasks);
+    const tasks = await Task.find({ user: req.user.id })
+      .skip(startIndex)
+      .limit(limit)
+      .sort({ completed: 1, priority: '-1', date: '-1' })
+      .exec();
+
+    const totalTasksCount = await Task.countDocuments();
+
+    res.json({ tasks, totalTasksCount, limit });
 
   } catch(err) {
     console.log(err);

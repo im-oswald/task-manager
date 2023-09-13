@@ -36,7 +36,7 @@ The application should have the following features:
 
 ## Prerequisites
 
-- Node js (version 18 or higher)
+- Node js (version 16 or higher)
 - React (version 18 or higher)
 - NPM (version 9 or higher)
 - Setup the development environment first.
@@ -56,34 +56,16 @@ git clone https://github.com/im-oswald/task-manager.git
 cd task-manager
 ```
 
-- Install Backend's dependencies:
+- Make sure you're using Node 16 at the very least or switch it using:
 
 ```
-npm install
+nvm use 16
 ```
 
-- Run Backend project locally:
+- Install dependencies of API and client and run the server:
 
 ```
-npm run dev
-```
-
-- Go to the client directory:
-
-```
-cd client
-```
-
-- Install Frontend's dependencies:
-
-```
-npm install
-```
-
-- Run Frontend project locally:
-
-```
-npm start
+./setup.sh
 ```
 
 ## Assumptions

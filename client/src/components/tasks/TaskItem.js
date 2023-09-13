@@ -1,0 +1,89 @@
+import React from 'react';
+import Moment from 'react-moment';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { deleteTask, updateTask, getTasks } from 'actions/task';
+import { Spinner } from 'components/spinner';
+import { PRIORITIES, PRIORITY_OPTIONS } from 'constants';
+
+/**
+ * TaskItem
+ *
+ * @param {Object}     task
+ * @param {Object}     auth
+ * @param {Function}   deleteTask
+ * @param {Function}   updateTask
+ * @param {Function}   getTasks
+ */
+const TaskItem = ({ task, auth, deleteTask, updateTask, getTasks }) => {
+  const { _id, title, priority, completed, date, user } = task;
+  const { loading } = auth;
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  const completeTask = () => {
+    updateTask(_id, { completed: true });
+    getTasks();
+  }
+
+  return (
+    <div className="post bg-white p-1 my-1">
+      <div>
+        <img src="https://www.pngmart.com/files/17/Project-Task-PNG-Transparent-Image.png"  alt="task" />
+      </div>
+      <div>
+        <p className={`badge badge-${PRIORITY_OPTIONS[priority]}`}>{PRIORITIES[priority]}</p>
+        <p className="my-1">
+          <span className={`${completed && 'strikeout-text'}`}>{title}</span>
+        </p>
+        <p className="post-date">
+          Added on <Moment format='MM/DD/YYYY'>{date}</Moment>
+        </p>
+        {
+          completed ? (
+            <span className="font-green">Hurray! You completed this task.</span>
+          ) : (
+            user === auth.user._id && (
+              <>
+                <button      
+                  type="button"
+                  className="btn btn-success"
+                  onClick={completeTask}>
+                  <i className="fas fa-check"></i> Complete
+                </button>
+                <button      
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => updateTask(_id) }>
+                  <i className="fa fa-pen"></i> Edit
+                </button>   
+                <button      
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => deleteTask(_id) }>
+                  <i className="fas fa-times"></i> Delete
+                </button>                        
+              </>
+            )
+          )
+        }
+      </div>
+    </div>
+  );
+}
+
+TaskItem.propTypes = {
+  auth: PropTypes.object.isRequired,
+  task: PropTypes.object.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+  getTasks: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { deleteTask, updateTask, getTasks })(TaskItem);

@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'store';
 import 'App.css';
-import { Landing, Navbar } from 'components/layout';
+import { Alert, Landing, Navbar } from 'components/layout';
 import { Login, Register } from 'components/auth';
 import { Dashboard } from 'components/dashboard';
 import { PrivateRoute } from 'components/routing';
 import { setAuthToken } from 'utils';
 import { loadUser } from 'actions';
+import { Tasks } from 'components/tasks';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
@@ -27,6 +28,7 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
+          <Alert />
           <Routes>
             <Route exact path='/' element={<Landing />} />
             <Route exact path='/login' element={<Login />} />
@@ -34,6 +36,11 @@ const App = () => {
             <Route exact path='/dashboard' element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            } />
+            <Route exact path='/tasks' element={
+              <PrivateRoute>
+                <Tasks />
               </PrivateRoute>
             } />
           </Routes>

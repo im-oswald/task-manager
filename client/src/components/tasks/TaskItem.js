@@ -31,7 +31,7 @@ const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
   }
 
   return (
-    <div className="post bg-white p-1 my-1">
+    <div className="task bg-white p-1 my-1">
       <div>
         <img src="https://www.pngmart.com/files/17/Project-Task-PNG-Transparent-Image.png"  alt="task" />
       </div>
@@ -40,7 +40,7 @@ const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
         <p className="my-1">
           <span className={`${completed && 'strikeout-text'}`}>{title}</span>
         </p>
-        <p className="post-date">
+        <p className="task-date">
           Added on <Moment format='MM/DD/YYYY'>{date}</Moment>
         </p>
         {

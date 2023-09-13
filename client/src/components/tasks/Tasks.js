@@ -27,7 +27,7 @@ const Tasks = ({ task, getTasks }) => {
           </h1>
           <p className="lead"><i className="fas fa-user"></i> Manage your tasks!</p>
           <TaskForm />
-          <div className="posts">
+          <div className="tasks">
             { tasks.length ? tasks.map((task) => <TaskItem key={task._id} task={task} />) : <h4>No tasks found</h4> }
           </div>
         </div>

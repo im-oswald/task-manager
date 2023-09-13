@@ -37,6 +37,8 @@ The application should have the following features:
 ## Prerequisites
 
 - Node js (version 18 or higher)
+- React (version 18 or higher)
+- NPM (version 9 or higher)
 - Setup the development environment first.
 - [React Client environment setup](./client/README.md)
 
@@ -54,16 +56,34 @@ git clone https://github.com/im-oswald/task-manager.git
 cd task-manager
 ```
 
-- Install dependencies:
+- Install Backend's dependencies:
 
 ```
 npm install
 ```
 
-- Run project locally:
+- Run Backend project locally:
 
 ```
 npm run dev
+```
+
+- Go to the client directory:
+
+```
+cd client
+```
+
+- Install Frontend's dependencies:
+
+```
+npm install
+```
+
+- Run Frontend project locally:
+
+```
+npm start
 ```
 
 ## Assumptions

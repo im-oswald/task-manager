@@ -25,7 +25,6 @@ export const deleteTask = (id) => async dispatch => {
     await axios.delete(`/api/tasks/${id}`);
 
     dispatch({ type: DELETE_TASK, payload: { id } });
-
     dispatch(setAlert('Task deleted', 'success'));
   } catch(err) {
     dispatch(setAlert('Error while deleting task', 'danger'));
@@ -45,6 +44,7 @@ export const addTask = (formData) => async dispatch => {
     const res = await axios.post('/api/tasks', body, options);
 
     dispatch({ type: ADD_TASK, payload: res.data });
+    dispatch(setAlert('Task created', 'success'));
   } catch(err) {
     const errors = err.response.data;
     if(errors && errors.length > 0) {
@@ -67,6 +67,7 @@ export const updateTask = (id, formData) => async dispatch => {
     const res = await axios.put(`/api/tasks/${id}`, body, options);
 
     dispatch({ type: UPDATE_TASK, payload: res.data });
+    dispatch(setAlert('Task updated', 'success'));
   } catch(err) {
     const errors = err.response.data;
     if(errors && errors.length > 0) {

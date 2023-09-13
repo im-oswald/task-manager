@@ -23,6 +23,13 @@ const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
     return <Spinner />;
   }
 
+  const triggerDelete = (id) => {
+    const shouldDelete = window.confirm("Are you sure you want to delete this task?");
+    if (shouldDelete) {
+      deleteTask(id);
+    }
+  }
+
   return (
     <div className="post bg-white p-1 my-1">
       <div>
@@ -53,13 +60,13 @@ const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
                   className="btn btn-primary"
                   onClick={() => selectTask(_id) }>
                   <i className="fa fa-pen"></i> Edit
-                </button>   
+                </button>
                 <button      
                   type="button"
                   className="btn btn-danger"
-                  onClick={() => deleteTask(_id) }>
+                  onClick={() => triggerDelete(_id) }>
                   <i className="fas fa-times"></i> Delete
-                </button>                        
+                </button>
               </>
             )
           )

@@ -25,11 +25,11 @@ const TaskItem = ({ task, auth, deleteTask, updateTask, selectTask }) => {
     return <Spinner />;
   }
 
-  const triggerDelete = (id) => {
+  const triggerDelete = async (id) => {
     const shouldDelete = window.confirm("Are you sure you want to delete this task?");
     if (shouldDelete) {
-      deleteTask(id);
-      getTasks(searchParams.get("page"));
+      await deleteTask(id);
+      await getTasks(searchParams.get("page"));
     }
   }
 

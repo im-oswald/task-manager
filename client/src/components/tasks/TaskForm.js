@@ -36,16 +36,16 @@ const TaskForm = ({ task, addTask, getTasks, clearTask, updateTask }) => {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     if (isSelected) {
-      updateTask(selectedTask._id, formData);
+      await updateTask(selectedTask._id, formData);
     } else {
-      addTask({ title, priority });
+      await addTask({ title, priority });
     }
     setFormData({ title: '', priority: '' });
-    getTasks(searchParams.get("page"));
+    await getTasks(searchParams.get("page"));
   }
 
   return (

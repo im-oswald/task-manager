@@ -20,7 +20,7 @@ router.get('/', auth, async (req, res) => {
       .sort({ completed: 1, priority: '-1', date: '-1' })
       .exec();
 
-    const totalTasksCount = await Task.countDocuments();
+    const totalTasksCount = await Task.countDocuments({ user: req.user.id });
 
     res.json({ tasks, totalTasksCount, limit });
 

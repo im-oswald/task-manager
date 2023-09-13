@@ -14,7 +14,7 @@ import { Paginate } from 'components/pagination';
  * @param {Function}   getTasks
  */
 const Tasks = ({ task, getTasks }) => {
-  const { tasks, total, loading } = task;
+  const { tasks, total, tasksPerPage, loading } = task;
   const [searchParams] = useSearchParams({});
 
   const handlePageChange = useCallback((newPage) => {
@@ -42,7 +42,7 @@ const Tasks = ({ task, getTasks }) => {
           </div>
         </div>
       </div>
-      <Paginate totalRecords={total} handlePageChange={handlePageChange} />
+      <Paginate totalRecords={total} handlePageChange={handlePageChange} tasksPerPage={tasksPerPage} />
     </Fragment>
   )
 }

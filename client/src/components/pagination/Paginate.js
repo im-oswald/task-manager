@@ -6,16 +6,19 @@ import { useSearchParams } from 'react-router-dom';
  * Paginate
  *
  * @param {Integer}    totalRecords
+ * @param {Integer}    tasksPerPage
  * @param {Function}   handlePageChange
  */
-const Paginate = ({ handlePageChange, totalRecords }) => {
+const Paginate = ({ handlePageChange, totalRecords, tasksPerPage }) => {
   const [searchParams, setSearchParams] = useSearchParams({});
   const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get("page")) || 1);
-  const [totalPages, setTotalPages] = useState(totalRecords);
+  const [totalPages, setTotalPages] = useState(Math.ceil((totalRecords || 1) / tasksPerPage));
+
+  console.log('Total Pages: ', totalPages);
 
   useEffect(() => {
-    setTotalPages(Math.ceil(totalRecords / 10));
-  }, [totalRecords]);
+    setTotalPages(Math.ceil((totalRecords || 1) / tasksPerPage));
+  }, [totalRecords, tasksPerPage]);
 
   useEffect(() => {
     // handle page changes
@@ -70,6 +73,7 @@ const Paginate = ({ handlePageChange, totalRecords }) => {
 
 Paginate.propTypes = {
   totalRecords: PropTypes.number.isRequired,
+  tasksPerPage: PropTypes.number.isRequired,
   handlePageChange: PropTypes.func.isRequired
 };
 
